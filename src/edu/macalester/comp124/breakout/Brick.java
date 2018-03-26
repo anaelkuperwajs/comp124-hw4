@@ -4,9 +4,6 @@ import comp124graphics.Rectangle;
 
 public class Brick extends Rectangle {
 
-    private final int LENGTH = 10;
-    private final int WIDTH = 10;
-
     /**
      * Constructor to create the rectangle object and initialize its instance variables.
      * The default creates a rectangle at position x,y with the specified width and height.

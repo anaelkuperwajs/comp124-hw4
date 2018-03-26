@@ -6,9 +6,6 @@ import java.awt.*;
 
 public class Ball extends Ellipse {
 
-    private int DX = 5;
-    private int DY = 5;
-
     /**
      * Constructor to create the ellipse object and initialize its instance variables.
      * The default creates an ellipse at position x,y with a bounding rectangle of width and height.
@@ -24,47 +21,5 @@ public class Ball extends Ellipse {
         setFilled(true);
         setFillColor(Color.BLACK);
     }
-
-    public void updatePosition(){
-
-        double newXPosition = getX() + DX;
-        double newYPosition = getY() + DY;
-
-        DX = checkXPosition(newXPosition);
-        DY = checkYPosition(newYPosition);
-
-        setPosition(newXPosition, newYPosition);
-
-    }
-
-    public int checkXPosition(double newXPosition) {
-        if(newXPosition >= 800){
-            return -5;
-        }
-
-        else if(newXPosition <= 0){
-            return 5;
-        }
-
-        else{
-            return DX;
-        }
-
-    }
-
-    public int checkYPosition(double newYPosition){
-        if(newYPosition >= 800){
-            return -5;
-        }
-
-        else if(newYPosition <= 0){
-            return 5;
-        }
-
-        else{
-            return DY;
-        }
-    }
-
 
 }

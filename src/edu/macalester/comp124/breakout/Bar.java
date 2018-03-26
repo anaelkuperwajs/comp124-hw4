@@ -21,4 +21,9 @@ public class Bar extends Rectangle {
         setFilled(true);
         setFillColor(Color.BLACK);
     }
+
+    public void barMove(double x){
+        setPosition(x, getY());
+    }
+
 }

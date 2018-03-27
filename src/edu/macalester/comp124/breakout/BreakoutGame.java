@@ -52,10 +52,10 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
         }
 
         ball.setPosition(BALL_INITIAL_X_POSITION, BALL_INITIAL_Y_POSITION);
-        DX = 5;
         DY = -5;
     }
 
+    //runs one entire game, 3 lives
     public void run(){
         resetGame();
         this.addMouseListener(this);
@@ -88,6 +88,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
         clicked = false;
     }
 
+    //sets up one entire game
     public void resetGame(){
         removeAll();
 
@@ -101,6 +102,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
     }
 
     public void updatePosition(){
+        //is this in the right order?
 
         double newXPosition = ball.getX() + DX;
         double newYPosition = ball.getY() + DY;
@@ -149,6 +151,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
 
     }
 
+    //bar collision
     public int checkBarCollision(Ball ball, int speed){
         if(getElementAt(ball.getX(), ball.getY() + 2*BALL_RADIUS) instanceof Bar && getElementAt(ball.getX() + 2*BALL_RADIUS, ball.getY() + 2*BALL_RADIUS) instanceof Bar){
 

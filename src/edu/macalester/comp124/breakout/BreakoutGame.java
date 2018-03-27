@@ -21,7 +21,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
     Bar bar;
     BrickManager brickManager;
 
-    private final int BAR_LENGTH = 800;
+    private final int BAR_LENGTH = 100;
     private final int BAR_WIDTH = 10;
     private final int BAR_INITIAL_X_POSITION = 350;
     private final int BAR_INITIAL_Y_POSITION = 700;
@@ -45,7 +45,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
 
     //each life
     public void runOneGame(){
-        while(ball.getY() < 800 || brickManager.getNumberOfBricks() > 0){
+        while(ball.getY() < 800 && brickManager.getNumberOfBricks() > 0){
             pause(10);
             bar.barMove(mouseXPosition);
             updatePosition();

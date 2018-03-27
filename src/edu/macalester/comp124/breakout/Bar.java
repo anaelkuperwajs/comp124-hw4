@@ -23,7 +23,7 @@ public class Bar extends Rectangle {
     }
 
     public void barMove(double x){
-        setPosition(x, getY());
+        setPosition(x - 50, getY());
     }
 
 }

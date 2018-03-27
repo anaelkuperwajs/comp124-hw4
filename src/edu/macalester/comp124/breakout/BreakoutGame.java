@@ -21,7 +21,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
     Bar bar;
     BrickManager brickManager;
 
-    private final int BAR_LENGTH = 100;
+    private final int BAR_LENGTH = 800;
     private final int BAR_WIDTH = 10;
     private final int BAR_INITIAL_X_POSITION = 350;
     private final int BAR_INITIAL_Y_POSITION = 700;
@@ -45,7 +45,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
 
     //each life
     public void runOneGame(){
-        while(ball.getY() < 800){
+        while(ball.getY() < 800 || brickManager.getNumberOfBricks() > 0){
             pause(10);
             bar.barMove(mouseXPosition);
             updatePosition();
@@ -102,35 +102,31 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
     }
 
     public void updatePosition(){
-        //is this in the right order?
 
         double newXPosition = ball.getX() + DX;
         double newYPosition = ball.getY() + DY;
+        ball.setPosition(newXPosition, newYPosition);
 
         DX = checkWallCollision(newXPosition, DX);
         DY = checkWallCollision(newYPosition, DY);
         int side = brickManager.checkBrickCollision(ball, BALL_RADIUS);
-        DX = handleBrickCollision(side, DX);
-        DY = handleBrickCollision(side, DY);
+        handleBrickCollision(side);
         DY = checkBarCollision(ball, DY);
 
-        ball.setPosition(newXPosition, newYPosition);
 
     }
 
     //brick collision
-    public int handleBrickCollision(int side, int speed){
+    public void handleBrickCollision(int side){
         if(side == 1 || side == 4 || side == 5 || side == 6 || side == 7 || side == 8){
-            return DY * -1;
+            DY *= -1;
+
         }
 
         else if(side == 2 || side == 3){
-            return DX * -1;
+            DX *= -1;
         }
 
-        else{
-            return speed;
-        }
     }
 
     //wall collisions
@@ -153,18 +149,14 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
 
     //bar collision
     public int checkBarCollision(Ball ball, int speed){
-        if(getElementAt(ball.getX(), ball.getY() + 2*BALL_RADIUS) instanceof Bar && getElementAt(ball.getX() + 2*BALL_RADIUS, ball.getY() + 2*BALL_RADIUS) instanceof Bar){
-
-            ball.setPosition(ball.getX(), BAR_INITIAL_Y_POSITION); //is this working??
-            return DY*-1;
+        if(getElementAt(ball.getX(), ball.getY() + 2*BALL_RADIUS) instanceof Bar || getElementAt(ball.getX() + 2*BALL_RADIUS, ball.getY() + 2*BALL_RADIUS) instanceof Bar){
+            return -Math.abs(DY);
         }
 
         else{
             return speed;
         }
     }
-
-
 
     /**
      * Invoked when the mouse button has been clicked (pressed

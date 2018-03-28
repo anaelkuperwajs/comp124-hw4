@@ -21,7 +21,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
     Bar bar;
     BrickManager brickManager;
 
-    private final int BAR_LENGTH = 100;
+    private final int BAR_LENGTH = 800;
     private final int BAR_WIDTH = 10;
     private final int BAR_INITIAL_X_POSITION = 350;
     private final int BAR_INITIAL_Y_POSITION = 700;
@@ -29,8 +29,6 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
     private final int BALL_RADIUS = 10;
     private final int BALL_INITIAL_X_POSITION = 390;
     private final int BALL_INITIAL_Y_POSITION = 680;
-    private int DX = 5;
-    private int DY = -5;
 
     private final int BRICKMANAGER_X_POSITION = 0;
     private final int BRICKMANAGER_Y_POSITION = 100;
@@ -52,7 +50,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
         }
 
         ball.setPosition(BALL_INITIAL_X_POSITION, BALL_INITIAL_Y_POSITION);
-        DY = -5;
+        ball.setDY(-5);
     }
 
     //runs one entire game, 3 lives
@@ -103,26 +101,24 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
 
     public void updatePosition(){
 
-        double newXPosition = ball.getX() + DX;
-        double newYPosition = ball.getY() + DY;
-        ball.setPosition(newXPosition, newYPosition);
+        ball.ballMove();
 
-        DX = checkWallCollision(newXPosition, DX);
-        DY = checkWallCollision(newYPosition, DY);
+        ball.setDX(checkWallCollision(ball.getX(), ball.getDX()));
+        ball.setDY(checkWallCollision(ball.getY(), ball.getDY()));
         int side = brickManager.checkBrickCollision(ball, BALL_RADIUS);
         handleBrickCollision(side);
-        DY = checkBarCollision(ball, DY);
+        ball.setDY(checkBarCollision(ball, ball.getDY()));
     }
 
     //brick collision
     public void handleBrickCollision(int side){
         if(side == 1 || side == 4 || side == 5 || side == 6 || side == 7 || side == 8){
-            DY *= -1;
+            ball.setDY(ball.getDY() * -1);
 
         }
 
         else if(side == 2 || side == 3){
-            DX *= -1;
+            ball.setDX(ball.getDX() * -1);
         }
 
     }
@@ -148,7 +144,7 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
     //bar collision
     public int checkBarCollision(Ball ball, int speed){
         if(getElementAt(ball.getX(), ball.getY() + 2*BALL_RADIUS) instanceof Bar || getElementAt(ball.getX() + 2*BALL_RADIUS, ball.getY() + 2*BALL_RADIUS) instanceof Bar){
-            return -Math.abs(DY);
+            return -Math.abs(ball.getDY());
         }
 
         else{

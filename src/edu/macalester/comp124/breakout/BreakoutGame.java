@@ -112,8 +112,6 @@ public class BreakoutGame extends CanvasWindow implements MouseListener, MouseMo
         int side = brickManager.checkBrickCollision(ball, BALL_RADIUS);
         handleBrickCollision(side);
         DY = checkBarCollision(ball, DY);
-
-
     }
 
     //brick collision
